@@ -112,7 +112,10 @@ function Config() {
       .update({ config: cfg as never, version: (data?.version ?? 1) + 1, updated_at: new Date().toISOString(), updated_by: u.user?.id ?? null })
       .eq("id", 1);
     setSaving(false);
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     toast.success("Configuración guardada. El motor la aplicará en la próxima sincronización.");
     qc.invalidateQueries({ queryKey: ["bot_config"] });
   };

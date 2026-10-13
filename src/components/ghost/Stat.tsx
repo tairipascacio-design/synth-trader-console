@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-export function Stat({ label, value, sub, tone }: { label: string; value: ReactNode; sub?: ReactNode; tone?: "pos" | "neg" | "warn" | "accent" }) {
+export function Stat({ label, value, sub, tone }: { label: string; value: ReactNode; sub?: ReactNode | undefined; tone?: "pos" | "neg" | "warn" | "accent" | undefined }) {
   const c =
     tone === "pos" ? "text-success" : tone === "neg" ? "text-destructive" : tone === "warn" ? "text-warning" : tone === "accent" ? "text-accent" : "text-foreground";
   return (
