@@ -137,9 +137,9 @@ function Config() {
         <Section title="Modo y mercados">
           <div className="space-y-3 p-4">
             <div className="flex gap-2">
-              {(["paper", "testnet", "live"] as const).map((m) => (
+              {(["live"] as const).map((m) => (
                 <Button key={m} size="sm" variant={cfg.mode === m ? "default" : "outline"} onClick={() => setCfg({ ...cfg, mode: m })}>
-                  {m === "paper" ? "Simulación" : m === "testnet" ? "Testnet" : "Real"}
+                  Real (Binance en vivo)
                 </Button>
               ))}
             </div>

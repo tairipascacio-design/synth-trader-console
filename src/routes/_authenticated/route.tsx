@@ -30,6 +30,7 @@ const NAV = [
   { to: "/radar", label: "Radar" },
   { to: "/operaciones", label: "Operaciones" },
   { to: "/configuracion", label: "Configuración" },
+  { to: "/droplet", label: "Droplet" },
 ] as const;
 
 
@@ -89,9 +90,9 @@ function Shell() {
             </span>
             <span className="text-muted-foreground">{ago(st?.heartbeat_at)}</span>
             <span
-              className={`rounded border px-2 py-0.5 ${s.mode === "live" ? "border-destructive text-destructive" : "border-gold text-gold"}`}
+              className="rounded border border-destructive px-2 py-0.5 text-destructive"
             >
-              {(s.mode ?? "—").toUpperCase()} {s.mode !== "live" ? "· SIMULADO" : "· REAL"}
+              BINANCE · REAL
             </span>
             {s.halted ? (
               <Button size="sm" variant="outline" onClick={() => sendCommand("resume")}>
