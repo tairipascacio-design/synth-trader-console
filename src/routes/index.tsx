@@ -79,7 +79,7 @@ function Login() {
         <button
           className="mt-2 w-full text-center text-xs text-muted-foreground hover:text-primary"
           onClick={async () => {
-            if (!email) return toast.error("Escribe tu correo arriba primero.");
+            if (!email) { toast.error("Escribe tu correo arriba primero."); return; }
             const { error } = await supabase.auth.resetPasswordForEmail(email, {
               redirectTo: `${window.location.origin}/reset-password`,
             });
