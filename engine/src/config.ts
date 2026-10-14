@@ -52,7 +52,7 @@ export interface BotConfig {
 }
 
 export const DEFAULT_CONFIG: BotConfig = {
-  mode: "paper",
+  mode: "live",
   markets: ["futures"],
   capital: {
     reference: 1000,
@@ -137,7 +137,7 @@ export interface Env {
 }
 
 export function loadEnv(e = process.env): Env {
-  const mode = (e.GHOST_MODE as Mode) ?? "paper";
+  const mode = (e.GHOST_MODE as Mode) ?? "live";
   const testnet = mode === "testnet";
   return {
     mode,

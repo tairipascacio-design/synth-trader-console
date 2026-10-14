@@ -24,13 +24,6 @@ export function Section({ title, children, right }: { title: string; children: R
   );
 }
 
-export function SimTag({ simulated }: { simulated: boolean }) {
-  return simulated ? (
-    <span className="rounded border border-gold/50 px-1 font-mono text-[10px] text-gold">SIM</span>
-  ) : (
-    <span className="rounded border border-destructive/60 px-1 font-mono text-[10px] text-destructive">REAL</span>
-  );
+export function SimTag(_: { simulated: boolean }) {
+  return null;
 }
-
-export const th = "px-3 py-2 text-left font-mono text-[10px] uppercase tracking-widest text-muted-foreground whitespace-nowrap";
-export const td = "px-3 py-1.5 font-mono text-xs whitespace-nowrap";
