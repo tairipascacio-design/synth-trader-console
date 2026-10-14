@@ -30,6 +30,7 @@ const NAV = [
   { to: "/radar", label: "Radar" },
   { to: "/operaciones", label: "Operaciones" },
   { to: "/configuracion", label: "Configuración" },
+  { to: "/droplet", label: "Droplet" },
 ] as const;
 
 
