@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
+import { dropletRequest } from "@/lib/droplet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -30,7 +30,8 @@ function set<T>(o: T, p: Path, v: unknown): T {
   const ks = p.split(".");
   let cur = c;
   for (const k of ks.slice(0, -1)) cur = cur[k] as Record<string, unknown>;
-  cur[ks.at(-1)!] = v;
+  const last = ks.at(-1);
+  if (last) cur[last] = v;
   return c as T;
 }
 
@@ -106,18 +107,12 @@ function Config() {
 
   const save = async () => {
     setSaving(true);
-    const { data: u } = await supabase.auth.getUser();
-    const { error } = await supabase
-      .from("bot_config")
-      .update({ config: cfg as never, version: (data?.version ?? 1) + 1, updated_at: new Date().toISOString(), updated_by: u.user?.id ?? null })
-      .eq("id", 1);
-    setSaving(false);
-    if (error) {
-      toast.error(error.message);
-      return;
-    }
-    toast.success("Configuración guardada. El motor la aplicará en la próxima sincronización.");
-    qc.invalidateQueries({ queryKey: ["bot_config"] });
+    try {
+      await dropletRequest('config', { config: cfg, version: data?.version }, 'PUT');
+      toast.success('Configuración guardada en el Droplet.');
+      qc.invalidateQueries({ queryKey: ['bot_config'] });
+    } catch (error) { toast.error(error instanceof Error ? error.message : 'No se pudo guardar'); }
+    finally { setSaving(false); }
   };
 
   return (

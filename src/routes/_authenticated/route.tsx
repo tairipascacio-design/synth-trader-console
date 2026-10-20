@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, redirect, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { currentOperator, signOut } from "@/lib/droplet";
 import { Button } from "@/components/ui/button";
 import { ago, sendCommand, statusQuery, useRealtimeInvalidate, type EngineStatus } from "@/lib/ghost";
 import {
@@ -18,9 +18,9 @@ import {
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
   beforeLoad: async () => {
-    const { data } = await supabase.auth.getUser();
-    if (!data.user) throw redirect({ to: "/" });
-    return { user: data.user };
+    const user = await currentOperator();
+    if (!user) throw redirect({ to: "/" });
+    return { user };
   },
   component: Shell,
 });
@@ -30,6 +30,7 @@ const NAV = [
   { to: "/radar", label: "Radar" },
   { to: "/operaciones", label: "Operaciones" },
   { to: "/configuracion", label: "Configuración" },
+  { to: "/droplet", label: "Droplet" },
 ] as const;
 
 
@@ -40,8 +41,7 @@ function Shell() {
   const role = useQuery({
     queryKey: ["my_role"],
     queryFn: async () => {
-      const { data } = await supabase.from("user_roles").select("role");
-      return data?.some((r) => r.role === "admin") ?? false;
+      return (await currentOperator())?.role === 'admin';
     },
   });
   const { data: st } = useQuery(statusQuery);
@@ -55,7 +55,7 @@ function Shell() {
         <div className="panel max-w-md p-8 text-center">
           <h1 className="text-xl font-bold text-destructive">Acceso denegado</h1>
           <p className="mt-2 text-sm text-muted-foreground">Esta cuenta no tiene rol de operador.</p>
-          <Button className="mt-4" variant="outline" onClick={() => supabase.auth.signOut().then(() => nav({ to: "/" }))}>
+          <Button className="mt-4" variant="outline" onClick={() => signOut().then(() => nav({ to: "/" }))}>
             Salir
           </Button>
         </div>
@@ -91,7 +91,7 @@ function Shell() {
             <span
               className="rounded border border-destructive px-2 py-0.5 text-destructive"
             >
-              BINANCE · REAL
+              {s.mode === 'live' ? 'BINANCE · LECTURA REAL' : s.mode === 'testnet' ? 'BINANCE · TESTNET' : 'DROPLET · SIN VERIFICAR'}
             </span>
             {s.halted ? (
               <Button size="sm" variant="outline" onClick={() => sendCommand("resume")}>
@@ -120,9 +120,9 @@ function Shell() {
                 </AlertDialogContent>
               </AlertDialog>
             )}
-            <button className="text-muted-foreground hover:text-foreground" onClick={() => supabase.auth.signOut().then(() => nav({ to: "/" }))}>
+            <Button variant="ghost" size="sm" onClick={() => signOut().then(() => nav({ to: "/" }))}>
               salir
-            </button>
+            </Button>
           </div>
         </div>
       </header>
