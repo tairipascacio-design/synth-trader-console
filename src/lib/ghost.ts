@@ -1,15 +1,13 @@
 import { queryOptions, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
+import { dropletRequest, type Row, type TableName } from "@/lib/droplet";
 
 export async function sendCommand(command: string, payload?: Record<string, unknown>) {
-  const { data: u } = await supabase.auth.getUser();
-  const { error } = await supabase
-    .from("engine_commands")
-    .insert({ command, payload: (payload ?? null) as never, created_by: u.user?.id ?? null });
-  if (error) toast.error(error.message);
-  else toast.success(`Orden "${command}" enviada al motor`);
+  try {
+    await dropletRequest('commands', { command, payload });
+    toast.success(`Comando "${command}" confirmado por el Droplet`);
+  } catch (error) { toast.error(error instanceof Error ? error.message : 'No se pudo enviar el comando'); }
 }
 
 export type BotConfig = {
@@ -69,23 +67,19 @@ export type EngineStatus = {
 export const configQuery = queryOptions({
   queryKey: ["bot_config"],
   queryFn: async () => {
-    const { data, error } = await supabase.from("bot_config").select("*").eq("id", 1).maybeSingle();
-    if (error) throw error;
-    return data;
+    return dropletRequest<{ config: BotConfig; version: number }>('config');
   },
 });
 
 export const statusQuery = queryOptions({
   queryKey: ["engine_status"],
   queryFn: async () => {
-    const { data, error } = await supabase.from("engine_status").select("*").eq("id", 1).maybeSingle();
-    if (error) throw error;
-    return data;
+    return dropletRequest<{ status: EngineStatus; heartbeat_at: string | null }>('status');
   },
   refetchInterval: 5000,
 });
 
-export const tableQuery = <T extends "signals" | "orders" | "positions" | "fills" | "events">(
+export const tableQuery = <T extends TableName>(
   table: T,
   orderCol: string,
   limit = 200,
@@ -93,13 +87,7 @@ export const tableQuery = <T extends "signals" | "orders" | "positions" | "fills
   queryOptions({
     queryKey: [table],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from(table)
-        .select("*")
-        .order(orderCol, { ascending: false })
-        .limit(limit);
-      if (error) throw error;
-      return data;
+      return dropletRequest<Row<T>[]>(`tables/${table}?order=${encodeURIComponent(orderCol)}&limit=${limit}`);
     },
   });
 
@@ -108,16 +96,10 @@ export function useRealtimeInvalidate() {
   const qc = useQueryClient();
   useEffect(() => {
     const tables = ["engine_status", "signals", "orders", "positions", "fills", "events"];
-    const ch = supabase.channel("ghost-live");
-    for (const t of tables) {
-      ch.on("postgres_changes", { event: "*", schema: "public", table: t }, () =>
-        qc.invalidateQueries({ queryKey: [t] }),
-      );
-    }
-    ch.subscribe();
-    return () => {
-      supabase.removeChannel(ch);
-    };
+    const timer = window.setInterval(() => {
+      for (const t of tables) void qc.invalidateQueries({ queryKey: [t] });
+    }, 5000);
+    return () => window.clearInterval(timer);
   }, [qc]);
 }
 

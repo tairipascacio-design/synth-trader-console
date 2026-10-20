@@ -42,6 +42,9 @@ export const Route = createFileRoute("/api/public/engine/sync")({
   server: {
     handlers: {
       POST: async ({ request }) => {
+        // Droplet-only architecture: reject the obsolete Cloud bridge before any I/O.
+        return Response.json({ error: 'Cloud sync disabled; use the Droplet local API.' }, { status: 410 });
+        /* Legacy bridge retained for reference, never executed.
         const secret = process.env["ENGINE_TOKEN"];
         if (!secret) return Response.json({ error: "ENGINE_TOKEN not configured" }, { status: 503 });
         const ts = request.headers.get("x-ghost-ts") ?? "";
@@ -76,6 +79,7 @@ export const Route = createFileRoute("/api/public/engine/sync")({
           db.from("engine_commands").select("id, command, payload, created_at").is("acked_at", null).order("id").limit(50),
         ]);
         return Response.json({ ok: errs.length === 0, errors: errs, config: cfg.data?.config, configVersion: cfg.data?.version, commands: cmds.data ?? [] });
+        */
       },
     },
   },

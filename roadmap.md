@@ -1,4 +1,6 @@
 # GHOST//SWEEP roadmap
+- [ ] Droplet-only hosting: local authenticated API, local persistence, same-origin console; no cloud/exchange calls from the device
+- [ ] Verify local health, authentication and restart recovery; actual Droplet deployment waits for server access
 - [x] Cloud schema (config, radar, orders, positions, fills, events, engine status, commands)
 - [x] Engine ingest/sync API (shared-secret HMAC) at /api/public/engine/sync
 - [x] Cyberpunk dashboard: panel, radar, operaciones, configuración (+ login, emergency stop)
