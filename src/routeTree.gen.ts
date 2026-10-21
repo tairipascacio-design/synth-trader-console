@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as DropletRouteImport } from './routes/droplet'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedConfiguracionRouteImport } from './routes/_authenticated/configuracion'
 import { Route as AuthenticatedOperacionesRouteImport } from './routes/_authenticated/operaciones'
@@ -25,6 +26,11 @@ const IndexRoute = IndexRouteImport.update({
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DropletRoute = DropletRouteImport.update({
+  id: '/droplet',
+  path: '/droplet',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -62,6 +68,7 @@ const ApiPublicEngineSyncRoute = ApiPublicEngineSyncRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/droplet': typeof DropletRoute
   '/reset-password': typeof ResetPasswordRoute
   '/configuracion': typeof AuthenticatedConfiguracionRoute
   '/operaciones': typeof AuthenticatedOperacionesRoute
@@ -71,6 +78,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/droplet': typeof DropletRoute
   '/reset-password': typeof ResetPasswordRoute
   '/configuracion': typeof AuthenticatedConfiguracionRoute
   '/operaciones': typeof AuthenticatedOperacionesRoute
@@ -82,6 +90,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/droplet': typeof DropletRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/configuracion': typeof AuthenticatedConfiguracionRoute
   '/_authenticated/operaciones': typeof AuthenticatedOperacionesRoute
@@ -93,6 +102,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/droplet'
     | '/reset-password'
     | '/configuracion'
     | '/operaciones'
@@ -102,6 +112,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/droplet'
     | '/reset-password'
     | '/configuracion'
     | '/operaciones'
@@ -112,6 +123,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/droplet'
     | '/reset-password'
     | '/_authenticated/configuracion'
     | '/_authenticated/operaciones'
@@ -123,6 +135,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  DropletRoute: typeof DropletRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   ApiPublicEngineSyncRoute: typeof ApiPublicEngineSyncRoute
 }
@@ -141,6 +154,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/droplet': {
+      id: '/droplet'
+      path: '/droplet'
+      fullPath: '/droplet'
+      preLoaderRoute: typeof DropletRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reset-password': {
@@ -208,6 +228,7 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  DropletRoute: DropletRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   ApiPublicEngineSyncRoute: ApiPublicEngineSyncRoute,
 }
