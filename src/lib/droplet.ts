@@ -10,7 +10,7 @@ export async function dropletRequest<T>(path: string, body?: unknown, method = '
     method: body === undefined ? 'GET' : method,
     credentials: 'same-origin',
     headers: body === undefined ? {} : { 'Content-Type': 'application/json' },
-    body: body === undefined ? undefined : JSON.stringify(body),
+    body: body === undefined ? null : JSON.stringify(body),
     signal: AbortSignal.timeout(10000),
   });
   if (!response.headers.get('content-type')?.includes('application/json')) {
