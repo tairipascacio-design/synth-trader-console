@@ -3,24 +3,27 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "GHOST//SWEEP autonomous liquidity trading engine (Binance Spot + USDⓈ-M Futures)",
-  "engines": { "node": ">=20.11" },
+  "description": "GHOST//SWEEP autonomous liquidity trading engine (Binance Spot + USD\u24c8-M Futures)",
+  "engines": {
+    "node": ">=20.11"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "node --enable-source-maps dist/index.js",
+    "start": "tsx src/index.ts",
     "dev": "tsx watch src/index.ts",
     "preflight": "tsx src/cli/preflight.ts",
     "backtest": "tsx src/cli/backtest.ts",
     "test": "vitest run",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "operator": "tsx src/cli/operator.ts"
   },
   "dependencies": {
-    "ws": "^8.18.0"
+    "ws": "^8.18.0",
+    "tsx": "^4.19.2"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
     "@types/ws": "^8.5.13",
-    "tsx": "^4.19.2",
     "typescript": "^5.7.2",
     "vitest": "^3.2.4"
   }
