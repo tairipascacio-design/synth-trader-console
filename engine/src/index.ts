@@ -1,4 +1,8 @@
+import { existsSync } from "node:fs";
 import { AuthStore } from "./auth.js";
+
+// Secrets live only in engine/.env on the Droplet (never in the repo).
+if (existsSync(".env")) process.loadEnvFile(".env");
 import { buildServer } from "./server.js";
 import { Journal } from "./util/journal.js";
 import { log } from "./util/log.js";
