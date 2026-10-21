@@ -3,9 +3,9 @@ import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { AddressInfo } from "node:net";
-import { AuthStore } from "../src/auth.js";
-import { Journal } from "../src/util/journal.js";
-import { buildServer } from "../src/server.js";
+import { AuthStore } from "../auth.js";
+import { Journal } from "../util/journal.js";
+import { buildServer } from "../server.js";
 
 process.env.COOKIE_SECURE = "0";
 const dir = mkdtempSync(join(tmpdir(), "ghost-"));
