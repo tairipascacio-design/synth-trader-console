@@ -1,5 +1,8 @@
 import { createInterface } from "node:readline";
+import { existsSync } from "node:fs";
 import { AuthStore } from "../auth.js";
+
+if (existsSync(".env")) process.loadEnvFile(".env");
 
 /** Creates or replaces the console operator. Usage: npm run operator -- tu@correo.com */
 const email = process.argv[2];
