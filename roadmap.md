@@ -1,5 +1,5 @@
 # GHOST//SWEEP roadmap
-- [ ] Personalize installation for 167.99.38.30 and tairipascacio-design/synth-trader-console; verify local API tests and document external verification requirements
+- [x] Personalize installation for 167.99.38.30 and tairipascacio-design/synth-trader-console; local API and navigation tests passed; actual Droplet verification remains pending
 - [ ] Droplet-only hosting: local authenticated API, local persistence, same-origin console; no cloud/exchange calls from the device
 - [ ] Verify local health, authentication and restart recovery; actual Droplet deployment waits for server access
 - [x] Cloud schema (config, radar, orders, positions, fills, events, engine status, commands)
@@ -7,5 +7,5 @@
 - [x] Cyberpunk dashboard: panel, radar, operaciones, configuración (+ login, emergency stop)
 - [ ] Node engine in /engine — DONE: types, config, log, latency, math, journal. TODO: Binance adapter (REST/WS multiplexed, user stream), strategies A-D, decision 0-100, sizing, risk guard, executor (clientOrderId idempotency), positions, reconciliation, console sync, health/admin server, tests
 - [ ] Deploy kit: PM2, Nginx, HTTPS, UFW, logrotate, .env.example, procedures — Droplet tab in console with ordered exact commands (done); engine files pending
-- [ ] ENGINE_TOKEN shared secret (needs user to set the same value on the Droplet)
+- [x] ENGINE_TOKEN no longer required: independent console uses only the same-origin Droplet API
 - [ ] Final 1:1 check against the attached spec
