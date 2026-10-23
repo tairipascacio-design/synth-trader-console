@@ -1,4 +1,5 @@
 # GHOST//SWEEP roadmap
+- [ ] Personalize installation for 167.99.38.30 and tairipascacio-design/synth-trader-console; verify local API tests and document external verification requirements
 - [ ] Droplet-only hosting: local authenticated API, local persistence, same-origin console; no cloud/exchange calls from the device
 - [ ] Verify local health, authentication and restart recovery; actual Droplet deployment waits for server access
 - [x] Cloud schema (config, radar, orders, positions, fills, events, engine status, commands)
