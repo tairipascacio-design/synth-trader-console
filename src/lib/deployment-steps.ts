@@ -90,7 +90,7 @@ export const DEPLOYMENT_STEPS: { title: string; cmds: string[]; note?: string }[
       "systemctl enable nginx",
       "systemctl reload nginx"
     ],
-    "note": "La consola y el acceso se sirven desde el mismo Droplet."
+    "note": "No necesitas un dominio para esta etapa: el comando ya usa tu IP 167.99.38.30. Un dominio solo hace falta más adelante para tener HTTPS y abrir la consola desde cualquier dispositivo. La consola y el acceso se sirven desde el mismo Droplet."
   },
   {
     "title": "10. Comprobar disponibilidad y reinicio",
