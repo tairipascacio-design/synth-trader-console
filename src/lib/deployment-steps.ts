@@ -83,7 +83,7 @@ export const DEPLOYMENT_STEPS: { title: string; cmds: string[]; note?: string }[
   {
     "title": "9. Conectar Nginx",
     "cmds": [
-      "sed 's/TU_DOMINIO/167.99.38.30/' deploy/nginx-ghost.conf > /etc/nginx/sites-available/ghost",
+      "cp deploy/nginx-ghost.conf /etc/nginx/sites-available/ghost",
       "ln -sf /etc/nginx/sites-available/ghost /etc/nginx/sites-enabled/ghost",
       "rm -f /etc/nginx/sites-enabled/default",
       "nginx -t",
