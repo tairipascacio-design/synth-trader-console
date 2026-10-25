@@ -108,7 +108,7 @@ systemctl enable nginx
 systemctl reload nginx
 ```
 
-No necesitas un dominio para esta etapa: el comando ya usa tu IP 167.99.38.30. Un dominio solo hace falta más adelante para tener HTTPS y abrir la consola desde cualquier dispositivo. La consola y el acceso se sirven desde el mismo Droplet.
+No se pide dominio: Nginx acepta la IP del Droplet y el túnel SSH. Un dominio solo hace falta más adelante para tener HTTPS y abrir la consola desde cualquier dispositivo.
 
 ## 10. Comprobar disponibilidad y reinicio
 
