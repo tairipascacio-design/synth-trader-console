@@ -11,6 +11,8 @@ export const Route = createFileRoute("/_authenticated/operaciones")({
       { name: "description", content: "Órdenes, posiciones, ejecuciones, stops e historial con resultado neto." },
       { property: "og:title", content: "Operaciones — GHOST//SWEEP" },
       { property: "og:description", content: "Órdenes, posiciones, ejecuciones, stops e historial con resultado neto." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Ops,

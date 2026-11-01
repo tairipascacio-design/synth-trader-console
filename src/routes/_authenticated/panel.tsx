@@ -10,6 +10,8 @@ export const Route = createFileRoute("/_authenticated/panel")({
       { name: "description", content: "Estado del motor, Binance, WebSockets, latencia, capital y exposición." },
       { property: "og:title", content: "Panel — GHOST//SWEEP" },
       { property: "og:description", content: "Estado del motor, Binance, WebSockets, latencia, capital y exposición." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Panel,
