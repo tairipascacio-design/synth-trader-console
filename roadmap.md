@@ -1,4 +1,5 @@
 # GHOST//SWEEP roadmap
+- [ ] Replace the console's Droplet-only login with Google OAuth; retain Droplet operational storage and engine authorization
 - [x] Personalize installation for 167.99.38.30 and tairipascacio-design/synth-trader-console; local API and navigation tests passed; actual Droplet verification remains pending
 - [ ] Droplet-only hosting: local authenticated API, local persistence, same-origin console; no cloud/exchange calls from the device
 - [ ] Verify local health, authentication and restart recovery; actual Droplet deployment waits for server access
