@@ -11,6 +11,8 @@ export const Route = createFileRoute("/_authenticated/radar")({
       { name: "description", content: "Oportunidades detectadas, puntuación 0-100 y motivos de aceptación o rechazo." },
       { property: "og:title", content: "Radar — GHOST//SWEEP" },
       { property: "og:description", content: "Oportunidades detectadas, puntuación 0-100 y motivos de aceptación o rechazo." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Radar,

@@ -16,6 +16,8 @@ export const Route = createFileRoute("/_authenticated/configuracion")({
       { name: "description", content: "Capital, riesgo, apalancamiento, estrategias, temporalidades, filtros y límites." },
       { property: "og:title", content: "Configuración — GHOST//SWEEP" },
       { property: "og:description", content: "Capital, riesgo, apalancamiento, estrategias, temporalidades, filtros y límites." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Config,

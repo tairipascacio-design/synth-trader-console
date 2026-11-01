@@ -1,5 +1,11 @@
 # GHOST//SWEEP — instalación en tu Droplet
 
+## Acceso de la consola con Google
+
+La pantalla de acceso ofrece únicamente «Continuar con Google» y ya no exige una sesión local del Droplet para abrir la consola. Usa la cuenta de Google que tiene el rol de administrador existente; no se conceden permisos de operador a cualquier cuenta nueva. No se crea un perfil adicional.
+
+Este cambio solo afecta al acceso de la consola. Las transacciones, registros, señales y posiciones siguen almacenándose en el Droplet. La página de Lovable no conecta automáticamente con la API de tu IP: el acceso de Google no sustituye la autorización independiente del motor ni habilita órdenes. Las instrucciones siguientes instalan el servicio local; su cuenta del paso 7 sigue siendo para la API local, no para el nuevo botón de Google. El Google gestionado está configurado para el alojamiento de Lovable; el acceso Google en una instalación independiente requiere configurar y verificar su integración antes de usarla.
+
 Servidor indicado: `167.99.38.30`. Repositorio indicado: https://github.com/tairipascacio-design/synth-trader-console
 
 **Estado:** paquete de instalación, sin despliegue verificado en tu servidor. El servicio inicial ofrece acceso, configuración y almacenamiento local. No inicia el escáner de Binance, no descarga balances y no compra ni vende. Los adaptadores existentes no están conectados al arranque; no inventa datos. Las órdenes están bloqueadas hasta implementar y verificar ejecución, protecciones y conciliación.

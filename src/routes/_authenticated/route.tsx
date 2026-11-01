@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, redirect, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { currentOperator, signOut } from "@/lib/droplet";
+import { currentConsoleUser, isConsoleAdmin, signOutConsole } from "@/lib/console-auth";
 import { Button } from "@/components/ui/button";
 import { ago, sendCommand, statusQuery, useRealtimeInvalidate, type EngineStatus } from "@/lib/ghost";
 import {
@@ -18,7 +18,7 @@ import {
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
   beforeLoad: async () => {
-    const user = await currentOperator();
+    const user = await currentConsoleUser();
     if (!user) throw redirect({ to: "/" });
     return { user };
   },
@@ -40,9 +40,7 @@ function Shell() {
   useRealtimeInvalidate();
   const role = useQuery({
     queryKey: ["my_role"],
-    queryFn: async () => {
-      return (await currentOperator())?.role === 'admin';
-    },
+    queryFn: isConsoleAdmin,
   });
   const { data: st } = useQuery(statusQuery);
   const s = (st?.status ?? {}) as EngineStatus;
@@ -55,7 +53,7 @@ function Shell() {
         <div className="panel max-w-md p-8 text-center">
           <h1 className="text-xl font-bold text-destructive">Acceso denegado</h1>
           <p className="mt-2 text-sm text-muted-foreground">Esta cuenta no tiene rol de operador.</p>
-          <Button className="mt-4" variant="outline" onClick={() => signOut().then(() => nav({ to: "/" }))}>
+          <Button className="mt-4" variant="outline" onClick={() => signOutConsole().then(() => nav({ to: "/" }))}>
             Salir
           </Button>
         </div>
@@ -120,7 +118,7 @@ function Shell() {
                 </AlertDialogContent>
               </AlertDialog>
             )}
-            <Button variant="ghost" size="sm" onClick={() => signOut().then(() => nav({ to: "/" }))}>
+            <Button variant="ghost" size="sm" onClick={() => signOutConsole().then(() => nav({ to: "/" }))}>
               salir
             </Button>
           </div>
